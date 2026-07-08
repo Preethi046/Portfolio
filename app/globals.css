@@ -1,0 +1,182 @@
+@import "tailwindcss";
+
+@theme {
+  /* ---- surfaces ---- */
+  --color-void: #050816;
+  --color-space: #0b1120;
+  --color-surface: #111827;
+
+  /* ---- accents ---- */
+  --color-violet: #6c63ff;
+  --color-purple: #8b5cf6;
+  --color-cyan: #00e5ff;
+  --color-pink: #ec4899;
+
+  /* ---- text ---- */
+  --color-ink: #ffffff;
+  --color-muted: #bfc6d4;
+
+  /* ---- glass ---- */
+  --color-glass: rgba(255, 255, 255, 0.08);
+  --color-glass-strong: rgba(255, 255, 255, 0.14);
+  --color-hairline: rgba(255, 255, 255, 0.12);
+
+  /* ---- type ---- */
+  --font-display: var(--font-display-raw), "Space Grotesk", sans-serif;
+  --font-body: var(--font-body-raw), "Inter", sans-serif;
+  --font-mono: var(--font-mono-raw), "JetBrains Mono", monospace;
+
+  /* ---- easing ---- */
+  --ease-signal: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+  background: var(--color-void);
+}
+
+body {
+  background: var(--color-void);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-violet);
+  color: #ffffff;
+}
+
+/* ---------------- custom scrollbar ---------------- */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-void);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--color-violet), var(--color-pink));
+  border-radius: 999px;
+  border: 2px solid var(--color-void);
+}
+
+/* ---------------- reduced motion ---------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------------- focus visibility ---------------- */
+:focus-visible {
+  outline: 2px solid var(--color-cyan);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---------------- utility layers ---------------- */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .glass {
+    background: var(--color-glass);
+    border: 1px solid var(--color-hairline);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .glass-strong {
+    background: var(--color-glass-strong);
+    border: 1px solid var(--color-hairline);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+  }
+
+  .text-gradient {
+    background: linear-gradient(
+      100deg,
+      var(--color-cyan) 0%,
+      var(--color-violet) 45%,
+      var(--color-pink) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .noise::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.045;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  .grid-overlay {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  .signal-dot {
+    box-shadow:
+      0 0 0 2px rgba(0, 229, 255, 0.15),
+      0 0 16px 2px rgba(108, 99, 255, 0.55);
+  }
+}
+
+@keyframes aurora-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(4%, -6%, 0) scale(1.08);
+  }
+  66% {
+    transform: translate3d(-3%, 4%, 0) scale(0.96);
+  }
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 0 14px rgba(0, 229, 255, 0);
+  }
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
